@@ -29,32 +29,39 @@ public final class AAEBlockEntityRenderHelper {
     }
 
     public static void renderTexture(
-            PoseStack poseStack, Identifier texture, int textureSize, int textWidth, SubmitNodeCollector nodes) {
+            PoseStack poseStack,
+            Identifier texture,
+            int textureSize,
+            int renderSize,
+            int textWidth,
+            SubmitNodeCollector nodes) {
         Font fr = Minecraft.getInstance().font;
         poseStack.pushPose();
         poseStack.translate(0.0F, 0.0F, 0.02F);
         poseStack.scale(0.016129032F, -0.016129032F, 0.016129032F);
-        poseStack.scale(0.5F, 0.5F, 0.0F);
-        poseStack.translate(0.5f * textWidth, -0.6f * fr.lineHeight, 0.5f);
+        poseStack.translate(0.25f * textWidth, -0.3f * fr.lineHeight, 0.5f);
+
+        float maxUV = renderSize / (float) textureSize;
+
         nodes.submitCustomGeometry(poseStack, RenderTypes.entityCutout(texture), (pose, consumer) -> {
             var color = -1;
-            var s = 2 * textureSize;
+            var s = renderSize;
             var light = LightCoordsUtil.FULL_BRIGHT;
             consumer.addVertex(pose, 0, s, 0)
                     .setColor(color)
-                    .setUv(0, 1F)
+                    .setUv(0, maxUV)
                     .setOverlay(OverlayTexture.NO_OVERLAY)
                     .setLight(light)
                     .setNormal(0.0F, 1.0F, 0.0F);
             consumer.addVertex(pose, s, s, 0)
                     .setColor(color)
-                    .setUv(1F, 1F)
+                    .setUv(maxUV, maxUV)
                     .setOverlay(OverlayTexture.NO_OVERLAY)
                     .setLight(light)
                     .setNormal(0.0F, 1.0F, 0.0F);
             consumer.addVertex(pose, s, 0, 0)
                     .setColor(color)
-                    .setUv(1F, 0)
+                    .setUv(maxUV, 0)
                     .setOverlay(OverlayTexture.NO_OVERLAY)
                     .setLight(light)
                     .setNormal(0.0F, 1.0F, 0.0F);

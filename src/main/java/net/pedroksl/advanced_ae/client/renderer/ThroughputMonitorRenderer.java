@@ -23,7 +23,8 @@ public class ThroughputMonitorRenderer implements PartRenderer<ThroughputMonitor
     public static final int positiveColor = AEColor.GREEN.mediumVariant;
     public static final int negativeColor = AEColor.RED.mediumVariant;
 
-    private static final int TREND_TEXTURE_SIZE = 5;
+    private static final int TREND_TEXTURE_SIZE = 16;
+    private static final int TREND_TEXTURE_RENDER_SIZE = 5;
     private static final Identifier POSITIVE_TEXTURE = AdvancedAE.makeId("textures/part/throughput_monitor_up.png");
     private static final Identifier NEGATIVE_TEXTURE = AdvancedAE.makeId("textures/part/throughput_monitor_down.png");
 
@@ -105,7 +106,12 @@ public class ThroughputMonitorRenderer implements PartRenderer<ThroughputMonitor
 
         if (state.trendTexture != null) {
             AAEBlockEntityRenderHelper.renderTexture(
-                    poseStack, state.trendTexture, TREND_TEXTURE_SIZE, state.throughputWidth, nodes);
+                    poseStack,
+                    state.trendTexture,
+                    TREND_TEXTURE_SIZE,
+                    TREND_TEXTURE_RENDER_SIZE,
+                    state.throughputWidth,
+                    nodes);
         }
 
         poseStack.popPose();

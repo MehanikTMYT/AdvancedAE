@@ -99,12 +99,11 @@ dependencies {
     }
 
     implementation "com.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-    //compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+    // Fleet policy: EMI is the only recipe viewer (JEI/REI plugins removed).
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
     implementation "curse.maven:applied-flux-965012:${applied_flux_file_id}"
 
     implementation "curse.maven:jade-324717:${jade_file_id}"
-    //compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
-    compileOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge-api:${jei_version}"
 
     // Compatibility
     compileOnly "curse.maven:apothic-enchanting-1063926:${apothic_ench_file_id}"
@@ -128,20 +127,7 @@ dependencies {
 
     localRuntime "curse.maven:sodium-394468:${sodium_file_id}"
     localRuntime "curse.maven:irisshaders-455508:${iris_file_id}"
-    // setup Xei
-    switch (use_Xei) {
-        case "emi":
-            runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
-            break
-        case "rei":
-            runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
-            runtimeOnly "dev.architectury:architectury-neoforge:15.0.8"
-            runtimeOnly "curse.maven:cloth-config-348521:5729127"
-            break
-        case "jei":
-            runtimeOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
-            break
-    }
+    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 }
 
 final generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -164,8 +150,7 @@ final generateModMetadata = tasks.register("generateModMetadata", ProcessResourc
             'mod_authors',
             'mod_description',
             'geckolib_version',
-            'ae2wtlib_version',
-            'jei_version'
+            'ae2wtlib_version'
     ].collectEntries { [it, project[it]] }
 
     inputs.properties projectProperties
